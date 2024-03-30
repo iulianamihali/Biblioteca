@@ -21,9 +21,6 @@ void meniu_exit();
 Context context;
 
 
-
-
-
 int main()
 {
     //citim datele
