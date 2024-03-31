@@ -15,6 +15,8 @@ void meniu_donare(Context* context);
 void meniu_vizualizare_carti(Context* context);
 void meniu_exit();
 
+void stergere_imprumuturi(Context* context, char carte_cautata[]);
+
 char* getCurrentDate()
 {
     time_t currentTime;
@@ -210,8 +212,25 @@ void meniu_imprumutare(Context* context)
                         context->carti[i].nr_exemplare--;
                         update_carti(context->carti, context->nr_carti);
                         update_imprumuturi(context->imprumuturi, context->nr_imprumuturi); //facem update in fisierul de imprumuturi
+                        char* data_imprumut = getCurrentDate();
                         system("cls");
-                        printf("Ati imprumutat cartea cu succes.\nCitire placuta!");
+                        printf("Ati imprumutat cartea cu succes.\nCitire placuta!\n");
+                        printf(" 0.Inapoi meniu\n");
+                        printf(" 1.Exit\n");
+                        int n;
+                        printf("=> ");
+                        scanf("%d", &n);
+                        getchar();
+                        if (n == 0)
+                        {
+                            system("cls");
+                            printare_meniu();
+                            meniu_principal(context);
+                        }
+                        else if(n == 1)
+                        {
+                            exit(0);
+                        }
                         break;
                     }
                     else
@@ -270,6 +289,7 @@ void meniu_restituire(Context* context)
     printf("=> ");
     int optiune;
     scanf("%d", &optiune);
+    getchar();
     if (optiune == 0)
     {
         system("cls");
@@ -284,9 +304,27 @@ void meniu_restituire(Context* context)
         fgets(autor, 101, stdin);
         autor[strcspn(autor, "\n")] = 0;
         printf("Cartea: ");
-        scanf("%s", carte);
+        fgets(carte, 101, stdin);
+        carte[strcspn(carte, "\n")] = 0;
+        stergere_imprumuturi(context, carte);
+ 
+        printf("Cartea dvs. %s a fost restituita cu succes!\n", carte);
+        printf(" 0.Inapoi meniu\n");
+        printf(" 1.Exit\n");
+        int n;
+        printf("=> ");
+        scanf("%d", &n);
         getchar();
-        printf("Cartea dvs. %s a fost restituita cu succes!", carte);
+        if (n == 0)
+        {
+            system("cls");
+            printare_meniu();
+            meniu_principal(context);
+        }
+        else if (n == 1)
+        {
+            exit(0);
+        }
     }
 
 }
@@ -365,4 +403,53 @@ void meniu_principal(Context* context)
         break;
     }
 
+}
+
+
+void stergere_imprumuturi(Context* context, char carte_cautata[])
+{
+    int id_carte_cautata = 0;
+    for (int i = 0; i < context->nr_carti; i++)
+    {
+        if (strcmp(context->carti[i].nume, carte_cautata) == 0)
+        {
+            context->carti[i].nr_exemplare++;
+            id_carte_cautata = context->carti[i].cod;
+           
+            break;
+            
+        }
+    }
+
+    for (int i = 0; i < context->nr_imprumuturi; i++)
+    {
+        if (context->imprumuturi[i].cod_utilizator == context->cont_logat.cod && context->imprumuturi[i].cod_carte == id_carte_cautata)
+        {
+            context->istoric[context->nr_istoric].cod_utilizator = context->cont_logat.cod;
+            context->istoric[context->nr_istoric].cod_carte = id_carte_cautata;
+            context->istoric[context->nr_istoric].data_imprumut = (char*)malloc(20);
+            strcpy(context->istoric[context->nr_istoric].data_imprumut, context->imprumuturi[i].data_imprumut);
+            char* returnDate = getCurrentDate();
+            context->istoric[context->nr_istoric].data_return = (char*)malloc(20);
+            strcpy(context->istoric[i].data_return, returnDate);
+            context->nr_istoric++;
+            break;
+        }
+    }
+
+
+    for (int i = 0; i < context->nr_imprumuturi; i++)
+    {
+        if (context->imprumuturi->cod_carte == id_carte_cautata && context->imprumuturi->cod_utilizator == context->cont_logat.cod)
+        {
+            context->imprumuturi[i] = context->imprumuturi[i + 1];
+           
+        }
+        
+    }
+    context->nr_imprumuturi--;
+
+    update_imprumuturi(context->imprumuturi, context->nr_imprumuturi);
+    update_carti(context->carti, context->nr_carti);
+    update_istoric(context->istoric, context->nr_istoric);
 }

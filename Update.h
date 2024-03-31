@@ -38,3 +38,16 @@ void update_carti(Carte carti[], int n)
 	fclose(file);
 
 }
+
+
+void update_istoric(Istoric istoric[], int n)
+{
+	FILE* file = fopen("istoric.txt", "w");
+	for (int i = 0; i < n; i++)
+	{
+		fprintf(file, "%d,%d,%s,%s", istoric[i].cod_utilizator, istoric[i].cod_carte, istoric[i].data_imprumut, istoric[i].data_return);
+		fprintf(file, "\n");
+	}
+	fclose(file);
+
+}

@@ -1,5 +1,5 @@
-148,Maitreyi,Mircea Eliade,Cartex,5
+148,Maitreyi,Mircea Eliade,Cartex,7
 926,Acolo unde canta racii,Delia Owens,Pandora,1
 119,Harry Potter si Talismanele Mortii,J.K.Rowling,Arthur,7
 210,Trepte spre cer,Zecharia Sitchin,Prestige,6
-777,Enigma Otiliei,George Calinescu,Rolcris,7
+777,Enigma Otiliei,George Calinescu,Rolcris,10
