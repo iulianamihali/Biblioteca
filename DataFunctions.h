@@ -13,6 +13,7 @@ void meniu_imprumutare(Context* context);
 void meniu_restituire(Context* context);
 void meniu_donare(Context* context);
 void meniu_vizualizare_carti(Context* context);
+void meniu_vizualizare_cont(Context* context);
 void meniu_exit();
 
 void stergere_imprumuturi(Context* context, char carte_cautata[]);
@@ -366,6 +367,47 @@ void meniu_donare(Context* context)
 
 void meniu_vizualizare_carti(Context* context)
 {
+    printf("0.Inapoi\n");
+    printf("1.Continuati\n");
+    printf("=> ");
+    int optiune;
+    scanf("%d", &optiune);
+    getchar();
+    if (optiune == 0)
+    {
+        system("cls");
+        printare_meniu();
+        meniu_principal(context);
+    }
+    else if (optiune == 1)
+    {
+        system("cls");
+        printf("   CARTI DISPONIBILE   \n");
+        for (int i = 0; i < context->nr_carti; i++)
+        {
+            
+            printf("Nume: %s\n", context->carti[i].nume);
+            printf("Autor: %s\n", context->carti[i].autor);
+            printf("Editura: %s\n", context->carti[i].editura);
+            printf("Nr. exemplare disponibile: %d\n\n", context->carti[i].nr_exemplare);
+        }
+    }
+    printf(" 0.Inapoi meniu\n");
+    printf(" 1.Exit\n");
+    int n;
+    printf("=> ");
+    scanf("%d", &n);
+    getchar();
+    if (n == 0)
+    {
+        system("cls");
+        printare_meniu();
+        meniu_principal(context);
+    }
+    else if (n == 1)
+    {
+        exit(0);
+    }
 }
 
 void meniu_cautare_carti(Context* context)
@@ -374,7 +416,71 @@ void meniu_cautare_carti(Context* context)
 
 void meniu_vizualizare_cont(Context* context)
 {
+    printf("0.Inapoi\n");
+    printf("1.Continuati\n");
+    printf("=> ");
+    int optiune;
+    scanf("%d", &optiune);
+    getchar();
+    if (optiune == 0)
+    {
+        system("cls");
+        printare_meniu();
+        meniu_principal(context);
+    }
+    else if (optiune == 1)
+    {
+        system("cls");
+        printf("   VIZUALIZARE CONT   \n\n");
 
+        printf(" ID logare: %d\n", context->cont_logat.cod);
+        printf(" Username: %s\n\n", context->cont_logat.nume);
+        printf("   ISTORIC   \n");
+        for (int i = 0; i < context->nr_istoric; i++)
+        {
+            if (context->istoric[i].cod_utilizator == context->cont_logat.cod)
+            {
+                for (int j = 0; j < context->nr_carti; j++)
+                {
+                    if (context->istoric[i].cod_carte == context->carti[j].cod)
+                    {
+                        printf(" Autorul: %s\n", context->carti[j].autor);
+                        printf(" Cartea: %s\n", context->carti[j].nume);
+                        break;
+                    }
+                }
+                printf(" Data imprumut: %s\n", context->istoric[i].data_imprumut);
+                printf(" Data return: %s\n\n", context->istoric[i].data_return);
+
+            }
+        }
+        printf("   DONATII   \n");
+        for (int i = 0; i < context->nr_donatii; i++)
+        {
+            if (context->cont_logat.cod == context->donatii[i].cod_utilizator)
+            {
+                printf(" Nume carte: %s\n", context->donatii[i].nume_carte);
+                printf(" Data donatie: %s\n\n", context->donatii[i].data_donatie);
+            }
+        }
+
+    }
+    printf(" 0.Inapoi meniu\n");
+    printf(" 1.Exit\n");
+    int n;
+    printf("=> ");
+    scanf("%d", &n);
+    getchar();
+    if (n == 0)
+    {
+        system("cls");
+        printare_meniu();
+        meniu_principal(context);
+    }
+    else if (n == 1)
+    {
+        exit(0);
+    }
 }
 
 void meniu_exit()
@@ -408,7 +514,10 @@ void meniu_principal(Context* context)
         meniu_cautare_carti(context);
         break;
     case 6:
-        meniu_exit();
+        meniu_vizualizare_cont(context);
+        break;
+    case 7:
+        meniu_exit(0);
         break;
     }
 
