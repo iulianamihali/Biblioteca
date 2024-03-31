@@ -36,16 +36,20 @@ void printare_meniu()
     printf("|     5.Cautare            |\n");
     printf("|     6.Vizualizare cont   |\n");
     printf("|     7.Iesire             |\n");
-    printf("- - - - - - - - - - - - - -");
+    printf("- - - - - - - - - - - - - -\n");
+    printf("=> ");
 }
 
 
 
 void login_cont(Context* context)
 {
-    printf("1.Log in\n");
-    printf("2.Sign up\n");
-    printf("=>");
+    printf(" - - - - - - - - - -\n");
+    printf("|    Biblioteca     |\n");
+    printf("|    1.Log in       |\n");
+    printf("|    2.Sign up      |\n");
+    printf(" - - - - - - - - - - \n");
+    printf("=> ");
     int n;
     scanf("%d", &n);
     getchar();
@@ -88,14 +92,13 @@ void login_cont(Context* context)
             }
             else
             {
-
                 printf("Nume sau parola invalida. Incearca din nou!\n");
-                system("cls");
                 printf("Introduceti numele: ");
-                scanf("%s", nume);
+                fgets(nume, 101, stdin);
+                nume[strcspn(nume, "\n")] = 0;
                 printf("Introduceti parola: ");
-                scanf("%s", parola);
-                getchar();
+                fgets(parola, 101, stdin);
+                parola[strcspn(parola, "\n")] = 0;
                 system("cls");
 
             }
@@ -105,7 +108,7 @@ void login_cont(Context* context)
     else
     {
         char nume[101], parola[101];
-        int verif = 1, OK = 1;
+        int valid_nume = 1, OK = 1;
         printf("Introduceti numele: ");
         scanf("%s", nume);
         while (OK)
@@ -114,19 +117,21 @@ void login_cont(Context* context)
             {
                 if (strcmp(nume, context->utilizatori[i].nume) == 0)
                 {
-                    verif = 0;
+                    valid_nume = 0;
                     break;
                 }
             }
-            if (verif == 0)
+            if (valid_nume == 0)
             {
                 printf("Numele exista deja.Incearca altul\n");
-                verif = 1;
+                printf("=> ");
                 scanf("%s", nume);
+                valid_nume = 1;
 
             }
             else
             {
+                system("cls");
                 OK = 0;
                 break;
             }
@@ -153,6 +158,7 @@ void login_cont(Context* context)
         system("cls");
         printare_meniu();
         meniu_principal(context);
+      
     }
 }
 
@@ -161,7 +167,7 @@ void meniu_imprumutare(Context* context)
 {
     printf("0.Inapoi\n");
     printf("1.Continuati\n");
-    printf("=>");
+    printf("=> ");
     int optiune;
     scanf("%d", &optiune);
     getchar();
@@ -182,6 +188,7 @@ void meniu_imprumutare(Context* context)
         printf("Cartea: ");
         fgets(carte, 101, stdin);
         carte[strcspn(carte, "\n")] = 0;
+        system("cls");
 
         int stop_while = 1;
         while (stop_while == 1)
@@ -209,8 +216,42 @@ void meniu_imprumutare(Context* context)
                     }
                     else
                     {
+                        printf("Stare: Stoc epuizat!  \n");
+                        printf("1.Alege alta carte!\n");
+                        stop_while = 0;
                         break;
                     }
+                }
+                 
+               
+            }
+            if (stop_while == 1)
+            {
+                printf("      Ne pare rau, nu avem aceasta carte.      \n");
+                printf(" 1.Alegeti alta carte\n");
+                printf(" 2.Reveniti la meniul principal\n");
+                int n;
+                printf("=> ");
+                scanf("%d", &n);
+                getchar();
+                system("cls");
+                if (n == 1)
+                {
+                    printf("Autorul: ");
+                    fgets(autor, 101, stdin);
+                    autor[strcspn(autor, "\n")] = 0;
+                    printf("Cartea: ");
+                    fgets(carte, 101, stdin);
+                    carte[strcspn(carte, "\n")] = 0;
+                    system("cls");
+                    break;
+                }
+                else
+                {
+                    printare_meniu();
+                    meniu_principal(context);
+                    stop_while = 0;
+                    break;
                 }
             }
         }
@@ -226,7 +267,7 @@ void meniu_restituire(Context* context)
 {
     printf("0.Inapoi\n");
     printf("1.Continuati\n");
-    printf("=>");
+    printf("=> ");
     int optiune;
     scanf("%d", &optiune);
     if (optiune == 0)
@@ -240,7 +281,8 @@ void meniu_restituire(Context* context)
         system("cls");
         char autor[101], carte[101];
         printf("Autorul: ");
-        scanf("%s", autor);
+        fgets(autor, 101, stdin);
+        autor[strcspn(autor, "\n")] = 0;
         printf("Cartea: ");
         scanf("%s", carte);
         getchar();
@@ -253,7 +295,7 @@ void meniu_donare(Context* context)
 {
     printf("0.Inapoi\n");
     printf("1.Continuati\n");
-    printf("=>");
+    printf("=> ");
     int optiune;
     scanf("%d", &optiune);
     if (optiune == 0)
@@ -296,7 +338,6 @@ void meniu_exit()
 
 void meniu_principal(Context* context)
 {
-    printf("\n");
     int number;
     scanf("%d", &number);
     getchar();
