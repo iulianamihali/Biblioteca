@@ -32,6 +32,9 @@
     <ClInclude Include="Update.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DataFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="carti.txt">

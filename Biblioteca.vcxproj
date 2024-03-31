@@ -130,6 +130,7 @@
     <ClCompile Include="Biblioteca.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DataFunctions.h" />
     <ClInclude Include="Init.h" />
     <ClInclude Include="Structuri.h" />
     <ClInclude Include="Update.h" />
