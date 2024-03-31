@@ -112,6 +112,7 @@ void citire_imprumuturi(Imprumut imprumuturi[], int* n)
 		}
 		k++;
 	}
+	
 	*n = k;
 	fclose(fptr);
 }

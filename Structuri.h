@@ -65,4 +65,8 @@ typedef struct Context
 	Istoric istoric[1001];
 	int nr_istoric;
 
+	Utilizator cont_logat;
+
+
+
 }Context;

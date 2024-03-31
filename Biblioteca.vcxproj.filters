@@ -29,6 +29,9 @@
     <ClInclude Include="Init.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Update.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="carti.txt">

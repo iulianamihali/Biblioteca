@@ -2,4 +2,4 @@
 926,Acolo unde canta racii,Delia Owens,Pandora,1
 119,Harry Potter si Talismanele Mortii,J.K.Rowling,Arthur,8
 210,Trepte spre cer,Zecharia Sitchin,Prestige,6
-777,Enigma Otiliei,George Calinescu,Rolcris,9
+777,Enigma Otiliei,George Calinescu,Rolcris,7

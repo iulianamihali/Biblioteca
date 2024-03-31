@@ -132,6 +132,7 @@
   <ItemGroup>
     <ClInclude Include="Init.h" />
     <ClInclude Include="Structuri.h" />
+    <ClInclude Include="Update.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="carti.txt" />
