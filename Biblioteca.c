@@ -11,10 +11,8 @@
 
 Context context;
 
-
 int main()
 { 
-    //citim datele
     init(&context);
     login_cont(&context);
 

@@ -51,3 +51,15 @@ void update_istoric(Istoric istoric[], int n)
 	fclose(file);
 
 }
+
+void update_donatii(Donatie donatii[], int n)
+{
+	FILE* file = fopen("donatii.txt", "w");
+	for (int i = 0; i < n; i++)
+	{
+		fprintf(file, "%d,%s,%s", donatii[i].cod_utilizator, donatii[i].nume_carte, donatii[i].data_donatie);
+		fprintf(file, "\n");
+	}
+	fclose(file);
+
+}

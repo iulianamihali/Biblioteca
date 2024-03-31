@@ -16,6 +16,7 @@ void meniu_vizualizare_carti(Context* context);
 void meniu_exit();
 
 void stergere_imprumuturi(Context* context, char carte_cautata[]);
+void adaugare_donatie(Context* context, char autor[], char carte[], char editura[]);
 
 char* getCurrentDate()
 {
@@ -336,6 +337,7 @@ void meniu_donare(Context* context)
     printf("=> ");
     int optiune;
     scanf("%d", &optiune);
+    getchar();
     if (optiune == 0)
     {
         system("cls");
@@ -345,15 +347,22 @@ void meniu_donare(Context* context)
     else if (optiune == 1)
     {
         system("cls");
-        char autor[101], carte[101];
+        char autor[101], carte[101], editura[101];
         printf("Autorul: ");
-        scanf("%s", autor);
+        fgets(autor, 101, stdin);
+        autor[strcspn(autor, "\n")] = 0;
         printf("Cartea: ");
-        scanf("%s", carte);
-        getchar();
+        fgets(carte, 101, stdin);
+        carte[strcspn(carte, "\n")] = 0;
+        printf("Editura: ");
+        fgets(editura, 101, stdin);
+        editura[strcspn(editura, "\n")] = 0;
+
+        adaugare_donatie(context, autor, carte, editura);
         printf("Cartea dvs. %s a fost donata cu succes!", carte);
     }
 }
+
 
 void meniu_vizualizare_carti(Context* context)
 {
@@ -452,4 +461,40 @@ void stergere_imprumuturi(Context* context, char carte_cautata[])
     update_imprumuturi(context->imprumuturi, context->nr_imprumuturi);
     update_carti(context->carti, context->nr_carti);
     update_istoric(context->istoric, context->nr_istoric);
+}
+
+void adaugare_donatie(Context* context, char autor[], char carte[], char editura[])
+{
+    int gasit = 0;
+    for (int i = 0; i < context->nr_carti; i++)
+    {
+        if (strcmp(context->carti[i].nume, carte) == 0 && strcmp(context->carti[i].autor, autor) == 0)
+        {
+            context->carti[i].nr_exemplare++;
+            gasit = 1;
+            break;
+        }
+    }
+    if (gasit == 0)
+    {
+        context->carti[context->nr_carti].cod = context->cont_logat.cod;
+        context->carti[context->nr_carti].nume = (char*)malloc(20);
+        strcpy(context->carti[context->nr_carti].nume, carte);
+        context->carti[context->nr_carti].autor = (char*)malloc(20);
+        strcpy(context->carti[context->nr_carti].autor, autor);
+        context->carti[context->nr_carti].editura = (char*)malloc(20);
+        strcpy(context->carti[context->nr_carti].editura, editura);
+        context->carti[context->nr_carti].nr_exemplare = 1;
+        context->nr_carti++;
+       
+    }
+    context->donatii[context->nr_donatii].cod_utilizator = context->cont_logat.cod;
+    context->donatii[context->nr_donatii].nume_carte = (char*)malloc(20);
+    strcpy(context->donatii[context->nr_donatii].nume_carte, carte);
+    context->donatii[context->nr_donatii].data_donatie = (char*)malloc(20);
+    char* data_donatie = getCurrentDate();
+    strcpy(context->donatii[context->nr_donatii].data_donatie, data_donatie);
+    context->nr_donatii++;
+    update_carti(context->carti, context->nr_carti);
+    update_donatii(context->donatii, context->nr_donatii);
 }
