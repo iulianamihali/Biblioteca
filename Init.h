@@ -4,7 +4,7 @@
 #include "Structuri.h"
 
 
-void citire_carti(Carte carti[], int* n)
+void citire_carti(Carte carti[], int* n)   //preluam datele din fisierul Carti si le punem in vector
 {
 	FILE* fptr;
 	fptr = fopen("carti.txt", "r");
@@ -14,7 +14,7 @@ void citire_carti(Carte carti[], int* n)
 	{
 		int i = 0;
 		char* ptr = strtok(string, ",\n");
-		while (ptr != NULL)
+		while (ptr != NULL)	
 		{
 			switch (i)
 			{
@@ -192,7 +192,7 @@ void citire_istoric(Istoric istoric[], int* n)
 
 }
 
-void init(Context* context)
+void init(Context* context)  // actualizam contextul nostru ca mai apoi sa putem utiliza totii vectorii cu datele din fisiere
 {
 	citire_carti(context->carti, &context->nr_carti);
 	citire_utilizatori(context->utilizatori, &context->nr_utilizatori);

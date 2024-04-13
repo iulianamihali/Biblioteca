@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include <time.h>
 #include "Update.h"
 #include "Structuri.h"
@@ -13,11 +14,15 @@ void meniu_imprumutare(Context* context);
 void meniu_restituire(Context* context);
 void meniu_donare(Context* context);
 void meniu_vizualizare_carti(Context* context);
+void meniu_cautare_carti(Context* context);
 void meniu_vizualizare_cont(Context* context);
 void meniu_exit();
 
 void stergere_imprumuturi(Context* context, char carte_cautata[]);
 void adaugare_donatie(Context* context, char autor[], char carte[], char editura[]);
+void cautare_carte(Context* context, char text[]);
+int fct_tolower(char sir[], char text[]);
+int verify_login_argv(Context context, char nume[], char parola[]);
 
 char* getCurrentDate()
 {
@@ -113,7 +118,7 @@ void login_cont(Context* context)
     {
         char nume[101], parola[101];
         int valid_nume = 1, OK = 1;
-        printf("Introduceti numele: ");
+        printf(" Introduceti numele: ");
         scanf("%s", nume);
         while (OK)
         {
@@ -127,7 +132,7 @@ void login_cont(Context* context)
             }
             if (valid_nume == 0)
             {
-                printf("Numele exista deja.Incearca altul\n");
+                printf(" Numele exista deja.Incearca altul\n");
                 printf("=> ");
                 scanf("%s", nume);
                 valid_nume = 1;
@@ -140,7 +145,7 @@ void login_cont(Context* context)
                 break;
             }
         }
-        printf("Introduceti parola: ");
+        printf(" Introduceti parola: ");
         scanf("%s", parola);
 
         int cod_random = rand();
@@ -169,9 +174,9 @@ void login_cont(Context* context)
 
 void meniu_imprumutare(Context* context)
 {
-    printf("0.Inapoi\n");
-    printf("1.Continuati\n");
-    printf("=> ");
+    printf(" 0.Inapoi\n");
+    printf(" 1.Continuati\n");
+    printf(" => ");
     int optiune;
     scanf("%d", &optiune);
     getchar();
@@ -186,10 +191,10 @@ void meniu_imprumutare(Context* context)
 
         system("cls");
         char autor[101], carte[101];
-        printf("Autorul: ");
+        printf(" Autorul: ");
         fgets(autor, 101, stdin);
         autor[strcspn(autor, "\n")] = 0;
-        printf("Cartea: ");
+        printf(" Cartea: ");
         fgets(carte, 101, stdin);
         carte[strcspn(carte, "\n")] = 0;
         system("cls");
@@ -216,11 +221,11 @@ void meniu_imprumutare(Context* context)
                         update_imprumuturi(context->imprumuturi, context->nr_imprumuturi); //facem update in fisierul de imprumuturi
                         char* data_imprumut = getCurrentDate();
                         system("cls");
-                        printf("Ati imprumutat cartea cu succes.\nCitire placuta!\n");
+                        printf(" Ati imprumutat cartea cu succes.\nCitire placuta!\n");
                         printf(" 0.Inapoi meniu\n");
                         printf(" 1.Exit\n");
                         int n;
-                        printf("=> ");
+                        printf(" => ");
                         scanf("%d", &n);
                         getchar();
                         if (n == 0)
@@ -237,8 +242,8 @@ void meniu_imprumutare(Context* context)
                     }
                     else
                     {
-                        printf("Stare: Stoc epuizat!  \n");
-                        printf("1.Alege alta carte!\n");
+                        printf(" Stare: Stoc epuizat!  \n");
+                        printf(" 1.Alege alta carte!\n");
                         stop_while = 0;
                         break;
                     }
@@ -258,10 +263,10 @@ void meniu_imprumutare(Context* context)
                 system("cls");
                 if (n == 1)
                 {
-                    printf("Autorul: ");
+                    printf(" Autorul: ");
                     fgets(autor, 101, stdin);
                     autor[strcspn(autor, "\n")] = 0;
-                    printf("Cartea: ");
+                    printf(" Cartea: ");
                     fgets(carte, 101, stdin);
                     carte[strcspn(carte, "\n")] = 0;
                     system("cls");
@@ -286,9 +291,9 @@ void meniu_imprumutare(Context* context)
 
 void meniu_restituire(Context* context)
 {
-    printf("0.Inapoi\n");
-    printf("1.Continuati\n");
-    printf("=> ");
+    printf(" 0.Inapoi\n");
+    printf(" 1.Continuati\n");
+    printf(" => ");
     int optiune;
     scanf("%d", &optiune);
     getchar();
@@ -302,19 +307,19 @@ void meniu_restituire(Context* context)
     {
         system("cls");
         char autor[101], carte[101];
-        printf("Autorul: ");
+        printf(" Autorul: ");
         fgets(autor, 101, stdin);
         autor[strcspn(autor, "\n")] = 0;
-        printf("Cartea: ");
+        printf(" Cartea: ");
         fgets(carte, 101, stdin);
         carte[strcspn(carte, "\n")] = 0;
         stergere_imprumuturi(context, carte);
  
-        printf("Cartea dvs. %s a fost restituita cu succes!\n", carte);
+        printf(" Cartea dvs. %s a fost restituita cu succes!\n", carte);
         printf(" 0.Inapoi meniu\n");
         printf(" 1.Exit\n");
         int n;
-        printf("=> ");
+        printf(" => ");
         scanf("%d", &n);
         getchar();
         if (n == 0)
@@ -333,9 +338,9 @@ void meniu_restituire(Context* context)
 
 void meniu_donare(Context* context)
 {
-    printf("0.Inapoi\n");
-    printf("1.Continuati\n");
-    printf("=> ");
+    printf(" 0.Inapoi\n");
+    printf(" 1.Continuati\n");
+    printf(" => ");
     int optiune;
     scanf("%d", &optiune);
     getchar();
@@ -349,27 +354,27 @@ void meniu_donare(Context* context)
     {
         system("cls");
         char autor[101], carte[101], editura[101];
-        printf("Autorul: ");
+        printf(" Autorul: ");
         fgets(autor, 101, stdin);
         autor[strcspn(autor, "\n")] = 0;
-        printf("Cartea: ");
+        printf(" Cartea: ");
         fgets(carte, 101, stdin);
         carte[strcspn(carte, "\n")] = 0;
-        printf("Editura: ");
+        printf(" Editura: ");
         fgets(editura, 101, stdin);
         editura[strcspn(editura, "\n")] = 0;
 
         adaugare_donatie(context, autor, carte, editura);
-        printf("Cartea dvs. %s a fost donata cu succes!", carte);
+        printf(" Cartea dvs. %s a fost donata cu succes!", carte);
     }
 }
 
 
 void meniu_vizualizare_carti(Context* context)
 {
-    printf("0.Inapoi\n");
-    printf("1.Continuati\n");
-    printf("=> ");
+    printf(" 0.Inapoi\n");
+    printf(" 1.Continuati\n");
+    printf(" => ");
     int optiune;
     scanf("%d", &optiune);
     getchar();
@@ -386,16 +391,16 @@ void meniu_vizualizare_carti(Context* context)
         for (int i = 0; i < context->nr_carti; i++)
         {
             
-            printf("Nume: %s\n", context->carti[i].nume);
-            printf("Autor: %s\n", context->carti[i].autor);
-            printf("Editura: %s\n", context->carti[i].editura);
-            printf("Nr. exemplare disponibile: %d\n\n", context->carti[i].nr_exemplare);
+            printf(" Nume: %s\n", context->carti[i].nume);
+            printf(" Autor: %s\n", context->carti[i].autor);
+            printf(" Editura: %s\n", context->carti[i].editura);
+            printf(" Nr. exemplare disponibile: %d\n\n", context->carti[i].nr_exemplare);
         }
     }
     printf(" 0.Inapoi meniu\n");
     printf(" 1.Exit\n");
     int n;
-    printf("=> ");
+    printf(" => ");
     scanf("%d", &n);
     getchar();
     if (n == 0)
@@ -412,13 +417,38 @@ void meniu_vizualizare_carti(Context* context)
 
 void meniu_cautare_carti(Context* context)
 {
+    int optiune;
+    printf(" 0.Inapoi\n");
+    printf(" 1.Continuati\n");
+    printf(" => ");
+    scanf("%d", &optiune);
+    getchar();
+    if (optiune == 0)
+    {
+        system("cls");
+        printare_meniu();
+        meniu_principal(context);
+    }
+    else if (optiune == 1)
+    {
+        system("cls");
+        printf(" Cautati: ");
+        char text[1001];
+        fgets(text, 1001, stdin);
+        text[strcspn(text, "\n")] = 0;
+        cautare_carte(context, text);
+
+    }
+     
+
 }
 
+  
 void meniu_vizualizare_cont(Context* context)
 {
-    printf("0.Inapoi\n");
-    printf("1.Continuati\n");
-    printf("=> ");
+    printf(" 0.Inapoi\n");
+    printf(" 1.Continuati\n");
+    printf(" => ");
     int optiune;
     scanf("%d", &optiune);
     getchar();
@@ -606,4 +636,81 @@ void adaugare_donatie(Context* context, char autor[], char carte[], char editura
     context->nr_donatii++;
     update_carti(context->carti, context->nr_carti);
     update_donatii(context->donatii, context->nr_donatii);
+}
+
+void cautare_carte(Context* context, char text[])
+{
+    system("cls");
+    printf("\n");
+    for (int i = 0; i < context->nr_carti; i++)
+    {
+       
+        if ((strstr(context->carti[i].autor, text) != NULL || fct_tolower(context->carti[i].autor, text) != 0) || (strstr(context->carti[i].nume, text) != NULL || fct_tolower(context->carti[i].nume, text) != 0) || (strstr(context->carti[i].editura, text) != NULL || fct_tolower(context->carti[i].editura, text) != 0) || (strstr(context->carti[i].autor, text) == 0 && strstr(context->carti[i].nume, text) == 0))
+        {
+            printf(" Nume: %s\n", context->carti[i].nume);
+            printf(" Autor: %s\n", context->carti[i].autor);
+            printf(" Editura: %s\n", context->carti[i].editura);
+            printf(" Nr. exemplare disponibile: %d\n\n", context->carti[i].nr_exemplare);
+        }
+    }
+
+    printf("- - - - - - - - - - - - - -\n");
+    printf("|     1.Cauta din nou      |\n");
+    printf("|     2.Inapoi la meniu    |\n");
+    printf("|     3.Exit               |\n");
+    printf("- - - - - - - - - - - - - -\n");
+    printf("=> ");
+    int optiune;
+    scanf("%d", &optiune);
+    getchar();
+    system("cls");
+    
+    if (optiune == 1)
+    {
+        printf(" Cautati: ");
+        char text2[1001];
+        fgets(text2, 1001, stdin);
+        text2[strcspn(text2, "\n")] = 0;
+        cautare_carte(context, text2);
+    }
+    else if (optiune == 2)
+    {
+        printare_meniu();
+        meniu_principal(context);
+    }
+    else if (optiune == 3)
+    {
+        meniu_exit(0);
+    }
+}
+
+int fct_tolower(char sir[], char text[])
+{
+    char copie_sir[101], copie_text[101];
+    strcpy(copie_sir, sir);
+    strcpy(copie_text, text);
+    for (int i = 0; i < strlen(copie_sir); i++)
+    {
+        copie_sir[i] = tolower(copie_sir[i]);
+    }
+
+    for (int i = 0; i < strlen(copie_text); i++)
+    {
+        copie_text[i] = tolower(copie_text[i]);
+    }
+
+    if(strstr(copie_sir, copie_text) != NULL)
+        return 1;
+    return 0;
+}
+
+
+int verify_login_argv(Context context, char nume[], char parola[])
+{
+    for (int i = 0; i < context.nr_utilizatori; i++)
+    {
+        if (strcmp(context.utilizatori->nume, nume) == 0 && strcmp(context.utilizatori->parola, parola) == 0)
+            return 1;
+
+    }
 }

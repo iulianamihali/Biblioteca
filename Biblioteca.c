@@ -9,12 +9,26 @@
 #include "Update.h"
 #include "DataFunctions.h"
 
-Context context;
 
-int main()
+int main(int argc, char* argv[])
 { 
-    init(&context);
-    login_cont(&context);
+    Context context;  // in variabila Context retinem vectorii structurilor
+    init(&context); //initializam vectorii
+    if(argc <= 1) // daca nu avem argumente pe linia de comanda
+        login_cont(&context);
+    else
+    {
+        if (verify_login_argv(context,argv[1], argv[2]) == 1)
+        {
+            printare_meniu();
+            meniu_principal(&context);
+        }
+        else
+        {
+            printf("Alegeti una dintre optiunile de mai jos\n");
+            login_cont(&context);
+        }
+    }
 
     return 0;
 }
