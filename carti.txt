@@ -2,9 +2,9 @@
 926,Acolo unde canta racii,Delia Owens,Pandora,1
 119,Harry Potter,J.K.Rowling,Arthur,7
 210,Trepte spre cer,Zecharia Sitchin,Prestige,6
-777,Enigma Otiliei,George Calinescu,Rolcris,8
+777,Enigma Otiliei,George Calinescu,Rolcris,9
 123,Cartea Nuntii,George Calinescu,Rolcris,9
 111,Calea,George Calinescu, Rolcris,7
 225,Calea,Zsdy,Arthur,3
-778,Calea,Ionik,Prestige,9
+778,Calea,Ionik,Prestige,2
 111,123234,kaskdka,sdas,1

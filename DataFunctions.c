@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+﻿#define _CRT_SECURE_NO_WARNINGS
 #define _CRT_SECURE_NO_DEPRECATE  
 #define _CRT_NONSTDC_NO_DEPRECATE
 
@@ -21,7 +21,7 @@ int hashString(const char* str) {
         hash = ((hash << 5) + hash) + c; // hash * 33 + c
     }
 
-    // Ajust?m valoarea hash la dimensiunea unui int
+    // Ajustăm valoarea hash la dimensiunea unui int
     return (int)(hash % INT_MAX);
 }
 char* getCurrentDate()
@@ -46,7 +46,6 @@ void printare_meniu()
     printf("|     6.Vizualizare cont   |\n");
     printf("|     7.Iesire             |\n");
     printf("- - - - - - - - - - - - - -\n");
-    printf("=> ");
 }
 
 
@@ -114,7 +113,7 @@ void login_cont(Context* context)
         }
 
     }
-    else
+    else if(n == 2)
     {
         char nume[101], parola[101];
         int valid_nume = 1, OK = 1;
@@ -171,6 +170,11 @@ void login_cont(Context* context)
         printare_meniu();
         meniu_principal(context);
 
+    }
+    else
+    {
+        system("cls");
+        login_cont(context);
     }
 }
 
@@ -241,12 +245,38 @@ void meniu_imprumutare(Context* context)
                         {
                             exit(0);
                         }
+                        else 
+                        {
+                            int stop_while2 = 0;
+                            while (stop_while2 == 0)
+                            {
+                                system("cls");
+                                int n;
+                                printf(" => ");
+                                scanf("%d", &n);
+                                getchar();
+                                if (n == 0)
+                                {
+                                    system("cls");
+                                    printare_meniu();
+                                    meniu_principal(context);
+                                    
+                                }
+                                else if (n == 1)
+                                {
+                                    stop_while2 = 1;
+                                    exit(0);
+
+                                }
+                            }
+
+                        }
                         break;
                     }
                     else
                     {
                         printf(" Stare: Stoc epuizat!  \n");
-                        printf(" 1.Alege alta carte!\n");
+                        printf(" 1.Alege alta carte!   \n");
                         stop_while = 0;
                         break;
                     }
@@ -275,18 +305,54 @@ void meniu_imprumutare(Context* context)
                     system("cls");
                     break;
                 }
-                else
+                else if(n == 2)
                 {
                     printare_meniu();
                     meniu_principal(context);
                     stop_while = 0;
                     break;
                 }
+                else
+                {
+                    int stop_while = 0;
+                    while (stop_while == 0)
+                    {
+                        system("cls");
+                        int n;
+                        printf("=> ");
+                        scanf("%d", &n);
+                        getchar();
+                        if (n == 1)
+                        {
+                            printf(" Autorul: ");
+                            fgets(autor, 101, stdin);
+                            autor[strcspn(autor, "\n")] = 0;
+                            printf(" Cartea: ");
+                            fgets(carte, 101, stdin);
+                            carte[strcspn(carte, "\n")] = 0;
+                            system("cls");
+                            stop_while = 1;
+                            break;
+                        }
+                        else if (n == 2)
+                        {
+                            printare_meniu();
+                            meniu_principal(context);
+                            stop_while = 1;
+                            break;
+                        }
+                    }
+                }
             }
         }
 
 
 
+    }
+    else
+    {
+        system("cls");
+        meniu_imprumutare(context);
     }
 
 }
@@ -335,6 +401,36 @@ void meniu_restituire(Context* context)
         {
             exit(0);
         }
+        else
+        {
+            int stop_while = 0;
+            while (stop_while == 0)
+
+            {
+                system("cls");
+                int n;
+                printf(" => ");
+                scanf("%d", &n);
+                getchar();
+                if (n == 0)
+                {
+                    system("cls");
+                    printare_meniu();
+                    meniu_principal(context);
+                    stop_while = 1;
+                }
+                else if (n == 1)
+                {
+                    stop_while = 1;
+                    exit(0);
+                }
+            }
+        }
+    }
+    else
+    {
+        system("cls");
+        meniu_restituire(context);
     }
 
 }
@@ -370,6 +466,11 @@ void meniu_donare(Context* context)
         adaugare_donatie(context, autor, carte, editura);
         printf(" Cartea dvs. %s a fost donata cu succes!", carte);
     }
+    else
+    {
+        system("cls");
+        meniu_donare(context);
+    }
 }
 
 
@@ -400,6 +501,11 @@ void meniu_vizualizare_carti(Context* context)
             printf(" Nr. exemplare disponibile: %d\n\n", context->carti[i].nr_exemplare);
         }
     }
+    else
+    {
+        system("cls");
+        meniu_vizualizare_carti(context);
+    }
     printf(" 0.Inapoi meniu\n");
     printf(" 1.Exit\n");
     int n;
@@ -416,6 +522,31 @@ void meniu_vizualizare_carti(Context* context)
     {
         exit(0);
     }
+    else
+    {
+        int stop_while = 0;
+
+        while (stop_while == 0)
+        {
+            int n;
+            printf(" => ");
+            scanf("%d", &n);
+            getchar();
+            if (n == 0)
+            {
+                system("cls");
+                printare_meniu();
+                meniu_principal(context);
+                stop_while = 1;
+            }
+            else if (n == 1)
+            {
+                stop_while = 1;
+                exit(0);
+            }
+        }
+    }
+
 }
 
 void meniu_cautare_carti(Context* context)
@@ -441,6 +572,11 @@ void meniu_cautare_carti(Context* context)
         text[strcspn(text, "\n")] = 0;
         cautare_carte(context, text);
 
+    }
+    else
+    {
+        system("cls");
+        meniu_cautare_carti(context);
     }
 
 
@@ -498,6 +634,11 @@ void meniu_vizualizare_cont(Context* context)
         }
 
     }
+    else
+    {
+        system("cls");
+        meniu_vizualizare_cont(context);
+    }
     printf(" 0.Inapoi meniu\n");
     printf(" 1.Exit\n");
     int n;
@@ -525,6 +666,7 @@ void meniu_exit()
 void meniu_principal(Context* context)
 {
     int number;
+    printf("=>");
     scanf("%d", &number);
     getchar();
     system("cls");
@@ -552,7 +694,11 @@ void meniu_principal(Context* context)
     case 7:
         meniu_exit(0);
         break;
+
+    default: meniu_principal(context);
+        break;
     }
+    
 
 }
 
