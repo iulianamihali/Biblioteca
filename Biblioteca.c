@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
         }
         else
         {
-            printf("Alegeti una dintre optiunile de mai jos\n");
+            printf("\n Nume sau parola incorecta.\n Alegeti una dintre optiunile de mai jos\n");
             login_cont(&context);
         }
     }

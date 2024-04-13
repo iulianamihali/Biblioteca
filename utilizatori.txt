@@ -5,6 +5,5 @@
 555,popescu,2678
 43,gami,trandafir
 41,cristi,rtrand
-41,floare,floare
-41,uliana,floare
-41,aria,as
+497908984,ovidiu,1010
+1963898228,anca,yellow

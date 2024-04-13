@@ -128,6 +128,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Biblioteca.c" />
+    <ClCompile Include="DataFunctions.c" />
+    <ClCompile Include="Init.c">
+      <UndefineAllPreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</UndefineAllPreprocessorDefinitions>
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</PreprocessToFile>
+    </ClCompile>
+    <ClCompile Include="Update.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DataFunctions.h" />

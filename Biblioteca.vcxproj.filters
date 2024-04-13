@@ -21,6 +21,15 @@
     <ClCompile Include="Biblioteca.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Init.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataFunctions.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Update.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Structuri.h">

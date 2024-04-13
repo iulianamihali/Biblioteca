@@ -4,6 +4,7 @@
 210,Trepte spre cer,Zecharia Sitchin,Prestige,6
 777,Enigma Otiliei,George Calinescu,Rolcris,8
 123,Cartea Nuntii,George Calinescu,Rolcris,9
-111,Calea,George Calinescu, Rolcris, 9
+111,Calea,George Calinescu, Rolcris,7
 225,Calea,Zsdy,Arthur,3
 778,Calea,Ionik,Prestige,9
+111,123234,kaskdka,sdas,1
