@@ -421,8 +421,8 @@ void meniu_restituire(Context* context)
         fgets(carte, 101, stdin);
         carte[strcspn(carte, "\n")] = 0;
         stergere_imprumuturi(context, autor, carte);
-
-        printf(" Cartea dvs. %s a fost restituita cu succes!\n", carte);
+        system("cls");
+        printf(" Cartea dvs. %s a fost restituita cu succes!\n\n", carte);
         printf(" 0.Inapoi meniu\n");
         printf(" 1.Exit\n");
         int n;
