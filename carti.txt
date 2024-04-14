@@ -1,10 +1,16 @@
-148,Maitreyi,Mircea Eliade,Cartex,7
-926,Acolo unde canta racii,Delia Owens,Pandora,2
-119,Harry Potter,J.K.Rowling,Arthur,7
-210,Trepte spre cer,Zecharia Sitchin,Prestige,6
-777,Enigma Otiliei,George Calinescu,Rolcris,8
-123,Cartea Nuntii,George Calinescu,Rolcris,9
-111,Calea,George Calinescu, Rolcris,7
-225,Calea,Zsdy,Arthur,3
+1438,Maitreyi,Mircea Eliade,Cartex,7
+9256,Acolo unde canta racii,Delia Owens,Pandora,2
+1109,Harry Potter,J.K.Rowling,Arthur,7
+21010,Trepte spre cer,Zecharia Sitchin,Prestige,6
+7737,Enigma Otiliei,George Calinescu,Rolcris,5
+1223,Cartea Nuntii,George Calinescu,Rolcris,9
+1978,Calea,George Calinescu, Rolcris,4
+225,Calea,Zsdy,Arthur,69
 778,Calea,Ionik,Prestige,2
-333,blue,Dominik,rol,1
+998,Amintiri din copilarie,Ion Creanga,Delfin,1
+2048945469,Umbra noptii,Anda Crammer,Delfin,1
+1234,george,calea,delfin,8
+1524195259,asd,da,asd,1
+1106535319,asadsd,asdds,s,1
+1947821119,sdsda,sdmkd,sda,1
+1795108886,sadsa,sadsa,asd,1

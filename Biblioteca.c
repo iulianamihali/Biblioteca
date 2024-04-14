@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
         login_cont(&context);
     else
     {
-        if (verify_login_argv(context,argv[1], argv[2]) == 1)
+        if (verify_login_argv(&context,argv[1], argv[2]) == 1)
         {
             printare_meniu();
             meniu_principal(&context);

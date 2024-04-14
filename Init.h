@@ -7,4 +7,3 @@ void citire_utilizatori(Utilizator utilizatori[], int* n);
 void citire_imprumuturi(Imprumut imprumuturi[], int* n);
 void citire_donatii(Donatie donatii[], int* n);
 void citire_istoric(Istoric istoric[], int* n);
-void init(Context* context);

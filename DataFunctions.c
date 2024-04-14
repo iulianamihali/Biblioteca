@@ -22,9 +22,10 @@ int hashString(const char* str) {
     }
 
     // Ajustăm valoarea hash la dimensiunea unui int
-    return (int)(hash % INT_MAX);
+    return (int)(hash % 2147483647);
+    
 }
-char* getCurrentDate()
+char* getCurrentDate() 
 {
     time_t currentTime;
     char* currentDate = (char*)malloc(20);
@@ -228,9 +229,11 @@ void meniu_imprumutare(Context* context)
                         update_imprumuturi(context->imprumuturi, context->nr_imprumuturi); //facem update in fisierul de imprumuturi
                         char* data_imprumut = getCurrentDate();
                         system("cls");
-                        printf(" Ati imprumutat cartea cu succes.\n Citire placuta!\n");
-                        printf(" 0.Inapoi meniu\n");
-                        printf(" 1.Exit\n");
+                        printf("     Ati imprumutat cartea cu succes.Citire placuta!\n\n\n");
+                        printf(" - - - - - - - - - - - - - - - - -\n");
+                        printf(" |     0.Inapoi meniu             |\n");
+                        printf(" |     1.Exit                     |\n");
+                        printf(" - - - - - - - - - - - - - - - - - \n");
                         int n;
                         printf(" => ");
                         scanf("%d", &n);
@@ -251,8 +254,10 @@ void meniu_imprumutare(Context* context)
                             while (stop_while2 == 0)
                             {
                                 system("cls");
-                                printf(" 0.Inapoi meniu\n");
-                                printf(" 1.Exit\n");
+                                printf(" - - - - - - - - - - - - - - - - -\n");
+                                printf(" |     0.Inapoi meniu             |\n");
+                                printf(" |     1.Exit                     |\n");
+                                printf(" - - - - - - - - - - - - - - - - - \n");
                                 int n;
                                 printf(" => ");
                                 scanf("%d", &n);
@@ -305,7 +310,7 @@ void meniu_imprumutare(Context* context)
                     fgets(carte, 101, stdin);
                     carte[strcspn(carte, "\n")] = 0;
                     system("cls");
-                    break;
+                    
                 }
                 else if(n == 2)
                 {
@@ -471,12 +476,83 @@ void meniu_donare(Context* context)
 
         adaugare_donatie(context, autor, carte, editura);
         printf(" Cartea dvs. %s a fost donata cu succes!", carte);
+        printf("\n");
+        printf(" - - - - - - - - - - - - - -\n");
+        printf(" |     0.Inapoi             |\n");
+        printf(" |     1.Donati din nou     |\n");
+        printf(" |     2.Exit               |\n");
+        printf(" - - - - - - - - - - - - - -\n");
+        int optiune;
+        printf(" => ");
+        scanf("%d", &optiune);
+        getchar();
+        if (optiune == 0)
+        {
+            system("cls");
+            printare_meniu();
+            meniu_principal(context);
+        }
+        else if (optiune == 1)
+        {
+            system("cls");
+            int stop_while = 0;
+            while (stop_while == 0)
+            {
+                system("cls");
+                char autor[101], carte[101], editura[101];
+                printf(" Autorul: ");
+                fgets(autor, 101, stdin);
+                autor[strcspn(autor, "\n")] = 0;
+                printf(" Cartea: ");
+                fgets(carte, 101, stdin);
+                carte[strcspn(carte, "\n")] = 0;
+                printf(" Editura: ");
+                fgets(editura, 101, stdin);
+                editura[strcspn(editura, "\n")] = 0;
+
+                adaugare_donatie(context, autor, carte, editura);
+                printf(" Cartea dvs. %s a fost donata cu succes!", carte);
+                printf("\n");
+                printf(" - - - - - - - - - - - - - -\n");
+                printf(" |     0.Inapoi             |\n");
+                printf(" |     1.Donati din nou     |\n");
+                printf(" |     2.Exit               |\n");
+                printf(" - - - - - - - - - - - - - -\n");
+                int optiune;
+                printf("=> ");
+                scanf("%d", &optiune);
+                getchar();
+
+                if (optiune == 0)
+                {
+                    system("cls");
+                    printare_meniu();
+                    meniu_principal(context);
+                    stop_while = 1;
+                    break;
+                }
+                else if (optiune == 2)
+                {
+                    exit(0);
+                    stop_while = 1;
+                    break;
+                }
+
+
+
+            }
+
+        }
+
+      
     }
+   
     else
     {
         system("cls");
         meniu_donare(context);
     }
+    
 }
 
 
@@ -804,7 +880,11 @@ void adaugare_donatie(Context* context, char autor[], char carte[], char editura
     }
     if (gasit == 0)
     {
-        context->carti[context->nr_carti].cod = context->cont_logat.cod;
+        char string[1001];
+        strcpy(string, autor);
+        strcpy(string+strlen(string), carte);
+        strcpy(string + strlen(string), editura);
+        context->carti[context->nr_carti].cod = hashString(string);
         context->carti[context->nr_carti].nume = (char*)malloc(20);
         strcpy(context->carti[context->nr_carti].nume, carte);
         context->carti[context->nr_carti].autor = (char*)malloc(20);
@@ -921,12 +1001,20 @@ int fct_tolower_strtok(char sir[], char text[])
 }
 
 
-int verify_login_argv(Context context, char nume[], char parola[])
+int verify_login_argv(Context *context, char nume[], char parola[])
 {
-    for (int i = 0; i < context.nr_utilizatori; i++)
+    for (int i = 0; i < context->nr_utilizatori; i++)
     {
-        if (strcmp(context.utilizatori->nume, nume) == 0 && strcmp(context.utilizatori->parola, parola) == 0)
+        if (strcmp(context->utilizatori[i].nume, nume) == 0 && strcmp(context->utilizatori[i].parola, parola) == 0)
+        {
+            context->cont_logat.nume = (char*)malloc(101);
+            strcpy(context->cont_logat.nume, nume);
+            context->cont_logat.parola = (char*)malloc(101);
+            strcpy(context->cont_logat.parola, parola);
+            context->cont_logat.cod = context->utilizatori[i].cod;
             return 1;
+        }
 
     }
+    return 0;
 }
