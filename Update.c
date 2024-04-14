@@ -14,7 +14,7 @@ void update_utilizatori(Utilizator utilizatori[], int n)
 	FILE* file = fopen("utilizatori.txt", "w");
 	for (int i = 0; i < n; i++)
 	{
-		fprintf(file, "%d,%s,%s", utilizatori[i].cod, utilizatori[i].nume, utilizatori[i].parola);
+		fprintf(file, "%d,%s,%s,%s", utilizatori[i].cod, utilizatori[i].nume, utilizatori[i].parola, utilizatori[i].tip_utilizator);
 		fprintf(file, "\n");
 	}
 	fclose(file);

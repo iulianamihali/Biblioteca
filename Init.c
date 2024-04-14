@@ -80,6 +80,10 @@ void citire_utilizatori(Utilizator utilizatori[], int* n)
 				utilizatori[k].parola = (char*)malloc(101);
 				strcpy(utilizatori[k].parola, ptr);
 				break;
+			case 3:
+				utilizatori[k].tip_utilizator = (char*)malloc(101);
+				strcpy(utilizatori[k].tip_utilizator, ptr);
+				break;
 			}
 			ptr = strtok(NULL, ",\n");
 			i++;

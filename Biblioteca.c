@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
     {
         if (verify_login_argv(&context,argv[1], argv[2]) == 1)
         {
-            printare_meniu();
+            printare_meniu(&context);
             meniu_principal(&context);
         }
         else

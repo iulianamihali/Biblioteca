@@ -14,6 +14,7 @@ typedef struct Utilizator
 	int cod;
 	char* nume;
 	char* parola;
+	char* tip_utilizator;
 
 }Utilizator;
 

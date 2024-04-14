@@ -1,6 +1,6 @@
 #pragma once
 #include "Structuri.h"
-void printare_meniu();
+void printare_meniu(Context* context);
 void meniu_principal(Context* context);
 void login_cont(Context* context);
 void meniu_imprumutare(Context* context);
@@ -9,6 +9,8 @@ void meniu_donare(Context* context);
 void meniu_vizualizare_carti(Context* context);
 void meniu_cautare_carti(Context* context);
 void meniu_vizualizare_cont(Context* context);
+void meniu_adaugare_carte_admin(Context* context);
+void meniu_stergere_carte_admin(Context* context);
 void meniu_exit();
 
 void stergere_imprumuturi(Context* context, char autor[], char carte_cautata[]);

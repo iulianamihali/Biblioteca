@@ -36,17 +36,39 @@ char* getCurrentDate()
 }
 
 
-void printare_meniu()
+void printare_meniu(Context* context)
 {
-    printf("- - - - - - - - - - - - - -\n");
-    printf("|     1.Imprumutare        |\n");
-    printf("|     2.Restituire         |\n");
-    printf("|     3.Donare             |\n");
-    printf("|     4.Vizualizare carti  |\n");
-    printf("|     5.Cautare            |\n");
-    printf("|     6.Vizualizare cont   |\n");
-    printf("|     7.Iesire             |\n");
-    printf("- - - - - - - - - - - - - -\n");
+    if (strcmp(context->cont_logat.tip_utilizator, "user") == 0)
+    {
+        printf("- - - - - - - - - - - - - -\n");
+        printf("|     1.Imprumutare        |\n");
+        printf("|     2.Restituire         |\n");
+        printf("|     3.Donare             |\n");
+        printf("|     4.Vizualizare carti  |\n");
+        printf("|     5.Cautare            |\n");
+        printf("|     6.Vizualizare cont   |\n");
+        printf("|     7.Iesire             |\n");
+        printf("- - - - - - - - - - - - - -\n");
+    }
+    else if (strcmp(context->cont_logat.tip_utilizator,"admin") == 0)
+    {
+        printf("- - - - - - - - - - - - - -\n");
+        printf("|     1.Imprumutare        |\n");
+        printf("|     2.Restituire         |\n");
+        printf("|     3.Donare             |\n");
+        printf("|     4.Vizualizare carti  |\n");
+        printf("|     5.Cautare            |\n");
+        printf("|     6.Vizualizare cont   |\n");
+        printf("|     7.Adaugare carte     |\n");
+        printf("|     8.Stergere carte     |\n");
+        printf("|     9.Iesire             |\n");
+        printf("- - - - - - - - - - - - - -\n");
+
+    }
+    else
+    {
+        exit(0);
+    }
 }
 
 
@@ -86,6 +108,8 @@ void login_cont(Context* context)
                 {
                     cod_exista = 1;
                     context->cont_logat.cod = context->utilizatori[i].cod;
+                    context->cont_logat.tip_utilizator = (char*)malloc(101);
+                    strcpy(context->cont_logat.tip_utilizator,context->utilizatori[i].tip_utilizator);
                     break;
                 }
             }
@@ -95,7 +119,7 @@ void login_cont(Context* context)
                 strcpy(context->cont_logat.nume, nume);
                 context->cont_logat.parola = (char*)malloc(101);
                 strcpy(context->cont_logat.parola, parola);
-                printare_meniu();
+                printare_meniu(context);
                 meniu_principal(context);
                 stop_while = 1;
             }
@@ -157,6 +181,8 @@ void login_cont(Context* context)
         strcpy(context->cont_logat.nume, nume);
         context->cont_logat.parola = (char*)malloc(101);
         strcpy(context->cont_logat.parola, parola);
+        context->cont_logat.tip_utilizator = (char*)malloc(101);
+        strcpy(context->cont_logat.tip_utilizator, "user");
 
         //adaugam noul utilizator in vectorul de utilizatori
         context->utilizatori[context->nr_utilizatori].cod = cod_random;
@@ -164,11 +190,14 @@ void login_cont(Context* context)
         strcpy(context->utilizatori[context->nr_utilizatori].nume, nume);
         context->utilizatori[context->nr_utilizatori].parola = (char*)malloc(101);
         strcpy(context->utilizatori[context->nr_utilizatori].parola, parola);
+        context->utilizatori[context->nr_utilizatori].tip_utilizator = (char*)malloc(101);
+        strcpy(context->utilizatori[context->nr_utilizatori].tip_utilizator, "user");
+
         context->nr_utilizatori++;
         update_utilizatori(context->utilizatori, context->nr_utilizatori); //un nou utilizator s-a inregistrat deci facem update in fisierul de utilizatori
 
         system("cls");
-        printare_meniu();
+        printare_meniu(context);
         meniu_principal(context);
 
     }
@@ -191,7 +220,7 @@ void meniu_imprumutare(Context* context)
     if (optiune == 0)
     {
         system("cls");
-        printare_meniu();
+        printare_meniu(context);
         meniu_principal(context);
     }
     else if (optiune == 1)
@@ -241,7 +270,7 @@ void meniu_imprumutare(Context* context)
                         if (n == 0)
                         {
                             system("cls");
-                            printare_meniu();
+                            printare_meniu(context);
                             meniu_principal(context);
                         }
                         else if (n == 1)
@@ -265,7 +294,7 @@ void meniu_imprumutare(Context* context)
                                 if (n == 0)
                                 {
                                     system("cls");
-                                    printare_meniu();
+                                    printare_meniu(context);
                                     meniu_principal(context);
                                     
                                 }
@@ -314,7 +343,7 @@ void meniu_imprumutare(Context* context)
                 }
                 else if(n == 2)
                 {
-                    printare_meniu();
+                    printare_meniu(context);
                     meniu_principal(context);
                     stop_while = 0;
                     break;
@@ -345,7 +374,7 @@ void meniu_imprumutare(Context* context)
                         }
                         else if (n == 2)
                         {
-                            printare_meniu();
+                            printare_meniu(context);
                             meniu_principal(context);
                             stop_while = 1;
                             break;
@@ -378,7 +407,7 @@ void meniu_restituire(Context* context)
     if (optiune == 0)
     {
         system("cls");
-        printare_meniu();
+        printare_meniu(context);
         meniu_principal(context);
     }
     else if (optiune == 1)
@@ -403,7 +432,7 @@ void meniu_restituire(Context* context)
         if (n == 0)
         {
             system("cls");
-            printare_meniu();
+            printare_meniu(context);
             meniu_principal(context);
         }
         else if (n == 1)
@@ -426,7 +455,7 @@ void meniu_restituire(Context* context)
                 if (n == 0)
                 {
                     system("cls");
-                    printare_meniu();
+                    printare_meniu(context);
                     meniu_principal(context);
                     stop_while = 1;
                 }
@@ -457,7 +486,7 @@ void meniu_donare(Context* context)
     if (optiune == 0)
     {
         system("cls");
-        printare_meniu();
+        printare_meniu(context);
         meniu_principal(context);
     }
     else if (optiune == 1)
@@ -489,7 +518,7 @@ void meniu_donare(Context* context)
         if (optiune == 0)
         {
             system("cls");
-            printare_meniu();
+            printare_meniu(context);
             meniu_principal(context);
         }
         else if (optiune == 1)
@@ -526,7 +555,7 @@ void meniu_donare(Context* context)
                 if (optiune == 0)
                 {
                     system("cls");
-                    printare_meniu();
+                    printare_meniu(context);
                     meniu_principal(context);
                     stop_while = 1;
                     break;
@@ -567,7 +596,7 @@ void meniu_vizualizare_carti(Context* context)
     if (optiune == 0)
     {
         system("cls");
-        printare_meniu();
+        printare_meniu(context);
         meniu_principal(context);
     }
     else if (optiune == 1)
@@ -597,7 +626,7 @@ void meniu_vizualizare_carti(Context* context)
     if (n == 0)
     {
         system("cls");
-        printare_meniu();
+        printare_meniu(context);
         meniu_principal(context);
     }
     else if (n == 1)
@@ -620,7 +649,7 @@ void meniu_vizualizare_carti(Context* context)
             if (n == 0)
             {
                 
-                printare_meniu();
+                printare_meniu(context);
                 meniu_principal(context);
                 stop_while = 1;
             }
@@ -645,7 +674,7 @@ void meniu_cautare_carti(Context* context)
     if (optiune == 0)
     {
         system("cls");
-        printare_meniu();
+        printare_meniu(context);
         meniu_principal(context);
     }
     else if (optiune == 1)
@@ -679,7 +708,7 @@ void meniu_vizualizare_cont(Context* context)
     if (optiune == 0)
     {
         system("cls");
-        printare_meniu();
+        printare_meniu(context);
         meniu_principal(context);
     }
     else if (optiune == 1)
@@ -688,7 +717,8 @@ void meniu_vizualizare_cont(Context* context)
         printf("   VIZUALIZARE CONT   \n\n");
 
         printf(" ID logare: %d\n", context->cont_logat.cod);
-        printf(" Username: %s\n\n", context->cont_logat.nume);
+        printf(" Username: %s\n", context->cont_logat.nume);
+        printf(" Tip utilizator: %s\n\n", context->cont_logat.tip_utilizator);
         printf("   ISTORIC   \n");
         for (int i = 0; i < context->nr_istoric; i++)
         {
@@ -733,7 +763,7 @@ void meniu_vizualizare_cont(Context* context)
     if (n == 0)
     {
         system("cls");
-        printare_meniu();
+        printare_meniu(context);
         meniu_principal(context);
     }
     else if (n == 1)
@@ -755,7 +785,7 @@ void meniu_vizualizare_cont(Context* context)
             if (n == 0)
             {
                 system("cls");
-                printare_meniu();
+                printare_meniu(context);
                 meniu_principal(context);
                 stop_while = 1;
             }
@@ -783,39 +813,82 @@ void meniu_principal(Context* context)
     scanf("%d", &number);
     getchar();
     system("cls");
-
-    switch (number)
-    {
-    case 1:
-        meniu_imprumutare(context);
-        break;
-    case 2:
-        meniu_restituire(context);
-        break;
-    case 3:
-        meniu_donare(context);
-        break;
-    case 4:
-        meniu_vizualizare_carti(context);
-        break;
-    case 5:
-        meniu_cautare_carti(context);
-        break;
-    case 6:
-        meniu_vizualizare_cont(context);
-        break;
-    case 7:
-        meniu_exit(0);
-        break;
-
-    default: 
-        printare_meniu();
-        meniu_principal(context);
-        break;
-    }
     
+    if (strcmp(context->cont_logat.tip_utilizator ,"user")==0)
+    {
 
+        switch (number)
+        {
+        case 1:
+            meniu_imprumutare(context);
+            break;
+        case 2:
+            meniu_restituire(context);
+            break;
+        case 3:
+            meniu_donare(context);
+            break;
+        case 4:
+            meniu_vizualizare_carti(context);
+            break;
+        case 5:
+            meniu_cautare_carti(context);
+            break;
+        case 6:
+            meniu_vizualizare_cont(context);
+            break;
+        case 7:
+            meniu_exit(0);
+            break;
+
+        default:
+            printare_meniu(context);
+            meniu_principal(context);
+            break;
+        }
+    }
+
+    else if(strcmp(context->cont_logat.tip_utilizator, "admin")==0)
+    {
+        switch (number)
+        {
+        case 1:
+            meniu_imprumutare(context);
+            break;
+        case 2:
+            meniu_restituire(context);
+            break;
+        case 3:
+            meniu_donare(context);
+            break;
+        case 4:
+            meniu_vizualizare_carti(context);
+            break;
+        case 5:
+            meniu_cautare_carti(context);
+            break;
+        case 6:
+            meniu_vizualizare_cont(context);
+            break;
+        case 7:
+            meniu_adaugare_carte_admin(context);
+            break;
+        case 8:
+            meniu_stergere_carte_admin(context);
+            break;
+        case 9:
+            meniu_exit(0);
+            break;
+
+        default:
+            printare_meniu(context);
+            meniu_principal(context);
+            break;
+        }
+    }
 }
+
+
 
 
 void stergere_imprumuturi(Context* context, char autor[], char carte_cautata[])
@@ -944,7 +1017,7 @@ void cautare_carte(Context* context, char text[])
     }
     else if (optiune == 2)
     {
-        printare_meniu();
+        printare_meniu(context);
         meniu_principal(context);
     }
     else if (optiune == 3)
@@ -1012,9 +1085,281 @@ int verify_login_argv(Context *context, char nume[], char parola[])
             context->cont_logat.parola = (char*)malloc(101);
             strcpy(context->cont_logat.parola, parola);
             context->cont_logat.cod = context->utilizatori[i].cod;
+            context->cont_logat.tip_utilizator = (char*)malloc(101);
+            strcpy(context->cont_logat.tip_utilizator, context->utilizatori[i].tip_utilizator);
+
             return 1;
         }
 
     }
     return 0;
+}
+
+void meniu_adaugare_carte_admin(Context* context)
+{
+    char autor[101], carte[101], editura[101];
+    printf(" Autorul: ");
+    fgets(autor, 101, stdin);
+    autor[strcspn(autor, "\n")] = 0;
+    printf(" Cartea: ");
+    fgets(carte, 101, stdin);
+    carte[strcspn(carte, "\n")] = 0;
+    printf(" Editura: ");
+    fgets(editura, 101, stdin);
+    editura[strcspn(editura, "\n")] = 0;
+
+    int gasit = 0;
+    for (int i = 0; i < context->nr_carti; i++)
+    {
+        if (strcmp(context->carti[i].nume, carte) == 0 && strcmp(context->carti[i].autor, autor) == 0 && strcmp(context->carti[i].editura, editura) == 0)
+        {
+            context->carti[i].nr_exemplare++;
+            update_carti(context->carti, context->nr_carti);
+            gasit = 1;
+            break;
+        }
+    }
+
+    if (gasit == 1)
+    {
+        printf("Cartea a fost gasita, nr. de exemplare s-a marit!\n");
+
+        printf(" - - - - - - - - - - - - - - -\n");
+        printf(" |     1.Adauga alta carte   |\n");
+        printf(" |     2.Inapoi la meniu     |\n");
+        printf(" |     3.Exit                |\n");
+        printf(" - - - - - - - - - - - - - - -\n");
+        printf(" => ");
+        int optiune;
+        scanf("%d", &optiune);
+        getchar();
+        system("cls");
+        if (optiune == 1)
+        {
+            meniu_adaugare_carte_admin(context);
+        }
+        else if (optiune == 2)
+        {
+            printare_meniu(context);
+            meniu_principal(context);
+
+        }
+        else if (optiune == 3)
+        {
+            exit(0);
+        }
+    
+    }
+    else if (gasit == 0)
+    {
+        
+        char string[1001];
+        strcpy(string, autor);
+        strcpy(string + strlen(string), carte);
+        strcpy(string + strlen(string), editura);
+        context->carti[context->nr_carti].cod = hashString(string);
+        context->carti[context->nr_carti].nume = (char*)malloc(20);
+        strcpy(context->carti[context->nr_carti].nume, carte);
+        context->carti[context->nr_carti].autor = (char*)malloc(20);
+        strcpy(context->carti[context->nr_carti].autor, autor);
+        context->carti[context->nr_carti].editura = (char*)malloc(20);
+        strcpy(context->carti[context->nr_carti].editura, editura);
+        context->carti[context->nr_carti].nr_exemplare = 1;
+        context->nr_carti++;
+
+        int stop_while = 0;
+        while (stop_while == 0)
+        {
+            update_carti(context->carti, context->nr_carti);
+            printf("Cartea a fost adaugata cu succes!\n");
+
+            printf(" - - - - - - - - - - - - - - -\n");
+            printf(" |     1.Adauga alta carte   |\n");
+            printf(" |     2.Inapoi la meniu     |\n");
+            printf(" |     3.Exit                |\n");
+            printf(" - - - - - - - - - - - - - - -\n");
+            printf(" => ");
+            int optiune;
+            scanf("%d", &optiune);
+            getchar();
+            system("cls");
+            if (optiune == 1)
+            {
+                system("cls");
+                char autor[101], carte[101], editura[101];
+                printf(" Autorul: ");
+                fgets(autor, 101, stdin);
+                autor[strcspn(autor, "\n")] = 0;
+                printf(" Cartea: ");
+                fgets(carte, 101, stdin);
+                carte[strcspn(carte, "\n")] = 0;
+                printf(" Editura: ");
+                fgets(editura, 101, stdin);
+                editura[strcspn(editura, "\n")] = 0;
+
+                char string[1001];
+                strcpy(string, autor);
+                strcpy(string + strlen(string), carte);
+                strcpy(string + strlen(string), editura);
+                context->carti[context->nr_carti].cod = hashString(string);
+                context->carti[context->nr_carti].nume = (char*)malloc(20);
+                strcpy(context->carti[context->nr_carti].nume, carte);
+                context->carti[context->nr_carti].autor = (char*)malloc(20);
+                strcpy(context->carti[context->nr_carti].autor, autor);
+                context->carti[context->nr_carti].editura = (char*)malloc(20);
+                strcpy(context->carti[context->nr_carti].editura, editura);
+                context->carti[context->nr_carti].nr_exemplare = 1;
+                context->nr_carti++;
+            }
+            else if (optiune == 2)
+            {
+                printare_meniu(context);
+                meniu_principal(context);
+                stop_while = 1;
+                break;
+
+            }
+            else if (optiune == 3)
+            {
+                exit(0);
+                stop_while = 1;
+                break;
+            }
+        }
+
+    }
+   
+}
+
+void meniu_stergere_carte_admin(Context* context)
+{
+    printf("Introduceti codul cartii: ");
+    int cod_carte, ok_gasit = 0;
+    scanf("%d", &cod_carte);
+    int poz_cod_gasit = 0;
+    for (int i = 0; i < context->nr_carti; i++)
+    {
+        if (context->carti[i].cod == cod_carte)
+        {
+            poz_cod_gasit = i;
+            ok_gasit = 1;
+            break;
+        }
+    }
+    
+    if (ok_gasit == 1)
+    {
+        for (int i = poz_cod_gasit; i < context->nr_carti; i++)
+        {
+            context->carti[i] = context->carti[i + 1];
+        }
+        context->nr_carti--;
+        update_carti(context->carti, context->nr_carti);
+        system("cls");
+        printf("  Ati sters cartea cu succes!\n");
+
+        printf(" - - - - - - - - - - - - - - -\n");
+        printf(" |     1.Sterge alta carte   |\n");
+        printf(" |     2.Inapoi la meniu     |\n");
+        printf(" |     3.Exit                |\n");
+        printf(" - - - - - - - - - - - - - - -\n");
+        
+        int optiune;
+        printf(" => ");
+        scanf("%d", &optiune);
+        getchar();
+        if (optiune == 1)
+        {
+            system("cls");
+            meniu_stergere_carte_admin(context);
+        }
+        else if (optiune == 2)
+        {
+            system("cls");
+            printare_meniu(context);
+            meniu_principal(context);
+            
+
+        }
+        else if (optiune == 3)
+        {
+            system("cls");
+            exit(0);
+        }
+    }
+    else if (ok_gasit == 0)
+    {
+        system("cls");
+        printf("Codul nu a fost gasit.\n");
+        printf(" - - - - - - - - - - - - - - -\n");
+        printf(" |     1.Incearca din nou    |\n");
+        printf(" |     2.Inapoi la meniu     |\n");
+        printf(" |     3.Exit                |\n");
+        printf(" - - - - - - - - - - - - - - -\n");
+        
+        char optiune[101];
+        printf(" => ");
+        scanf("%s", optiune);
+        getchar();
+        if (strcmp(optiune, "1") == 0)
+        {
+            system("cls");
+            meniu_stergere_carte_admin(context);
+        }
+        else if (strcmp(optiune, "2") == 0)
+        {
+            system("cls");
+            printare_meniu(context);
+            meniu_principal(context);
+
+        }
+        else if (strcmp(optiune, "3") == 0)
+        {
+            system("cls");
+            exit(0);
+        }
+        else
+        {
+            int stop_while = 0;
+            while (stop_while == 0)
+            {
+                system("cls");
+                printf(" - - - - - - - - - - - - - - -\n");
+                printf(" |     1.Incearca din nou    |\n");
+                printf(" |     2.Inapoi la meniu     |\n");
+                printf(" |     3.Exit                |\n");
+                printf(" - - - - - - - - - - - - - - -\n");
+                char optiune[101];
+                printf(" => ");
+                scanf("%s", optiune);
+                getchar();
+                if (strcmp(optiune, "1") == 0)
+                {
+                    stop_while = 1;
+                    system("cls");
+                    meniu_stergere_carte_admin(context);
+                }
+                else if (strcmp(optiune, "2") == 0)
+                {
+                    stop_while = 1;
+                    system("cls");
+                    printare_meniu(context);
+                    meniu_principal(context);
+
+                }
+                else if (strcmp(optiune, "3")==0)
+                {
+                    stop_while = 1;
+                    system("cls");
+                    exit(0);
+                }
+                else
+                {
+                    continue;
+                }
+                
+            }
+
+        }
+    }
 }
