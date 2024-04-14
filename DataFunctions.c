@@ -251,6 +251,8 @@ void meniu_imprumutare(Context* context)
                             while (stop_while2 == 0)
                             {
                                 system("cls");
+                                printf(" 0.Inapoi meniu\n");
+                                printf(" 1.Exit\n");
                                 int n;
                                 printf(" => ");
                                 scanf("%d", &n);
@@ -318,6 +320,8 @@ void meniu_imprumutare(Context* context)
                     while (stop_while == 0)
                     {
                         system("cls");
+                        printf(" 1.Alegeti alta carte\n");
+                        printf(" 2.Reveniti la meniul principal\n");
                         int n;
                         printf("=> ");
                         scanf("%d", &n);
@@ -408,6 +412,8 @@ void meniu_restituire(Context* context)
 
             {
                 system("cls");
+                printf(" 0.Inapoi meniu\n");
+                printf(" 1.Exit\n");
                 int n;
                 printf(" => ");
                 scanf("%d", &n);
@@ -491,7 +497,7 @@ void meniu_vizualizare_carti(Context* context)
     else if (optiune == 1)
     {
         system("cls");
-        printf("   CARTI DISPONIBILE   \n");
+        printf("   CARTI DISPONIBILE   \n\n");
         for (int i = 0; i < context->nr_carti; i++)
         {
 
@@ -528,13 +534,16 @@ void meniu_vizualizare_carti(Context* context)
 
         while (stop_while == 0)
         {
+            system("cls");
+            printf(" 0.Inapoi meniu\n");
+            printf(" 1.Exit\n");
             int n;
             printf(" => ");
             scanf("%d", &n);
             getchar();
             if (n == 0)
             {
-                system("cls");
+                
                 printare_meniu();
                 meniu_principal(context);
                 stop_while = 1;
@@ -655,6 +664,34 @@ void meniu_vizualizare_cont(Context* context)
     {
         exit(0);
     }
+    else
+    {
+        int stop_while = 0;
+        while (stop_while == 0)
+        {
+            system("cls");
+            printf(" 0.Inapoi meniu\n");
+            printf(" 1.Exit\n");
+            int n;
+            printf("=> ");
+            scanf("%d", &n);
+            getchar();
+            if (n == 0)
+            {
+                system("cls");
+                printare_meniu();
+                meniu_principal(context);
+                stop_while = 1;
+            }
+            else if (n == 1)
+            {
+                exit(0);
+                stop_while = 1;
+            }
+           
+        }
+
+    }
 }
 
 void meniu_exit()
@@ -695,7 +732,9 @@ void meniu_principal(Context* context)
         meniu_exit(0);
         break;
 
-    default: meniu_principal(context);
+    default: 
+        printare_meniu();
+        meniu_principal(context);
         break;
     }
     
@@ -794,15 +833,16 @@ void cautare_carte(Context* context, char text[])
     for (int i = 0; i < context->nr_carti; i++)
     {
 
-        if ((strstr(context->carti[i].autor, text) != NULL || fct_tolower(context->carti[i].autor, text) != 0) || (strstr(context->carti[i].nume, text) != NULL || fct_tolower(context->carti[i].nume, text) != 0) || (strstr(context->carti[i].editura, text) != NULL || fct_tolower(context->carti[i].editura, text) != 0) || (strstr(context->carti[i].autor, text) == 0 && strstr(context->carti[i].nume, text) == 0))
+        if ((strstr(context->carti[i].autor, text) != NULL || fct_tolower(context->carti[i].autor, text) != 0) || (strstr(context->carti[i].nume, text) != NULL || fct_tolower(context->carti[i].nume, text) != 0) || (strstr(context->carti[i].editura, text) != NULL || fct_tolower(context->carti[i].editura, text) != 0) || (fct_tolower_strtok(context->carti[i].autor, text) != 0 || fct_tolower_strtok(context->carti[i].autor, text) != 0))
         {
             printf(" Nume: %s\n", context->carti[i].nume);
             printf(" Autor: %s\n", context->carti[i].autor);
             printf(" Editura: %s\n", context->carti[i].editura);
             printf(" Nr. exemplare disponibile: %d\n\n", context->carti[i].nr_exemplare);
         }
-    }
+      
 
+    }
     printf("- - - - - - - - - - - - - -\n");
     printf("|     1.Cauta din nou      |\n");
     printf("|     2.Inapoi la meniu    |\n");
@@ -831,7 +871,9 @@ void cautare_carte(Context* context, char text[])
     {
         meniu_exit(0);
     }
-}
+ 
+    
+ }
 
 int fct_tolower(char sir[], char text[])
 {
@@ -850,6 +892,31 @@ int fct_tolower(char sir[], char text[])
 
     if (strstr(copie_sir, copie_text) != NULL)
         return 1;
+    return 0;
+}
+
+int fct_tolower_strtok(char sir[], char text[])
+{
+    char copie_sir[101], copie_text[101];
+    strcpy(copie_sir, sir);
+    strcpy(copie_text, text);
+    for (int i = 0; i < strlen(copie_sir); i++)
+    {
+        copie_sir[i] = tolower(copie_sir[i]);
+    }
+
+    for (int i = 0; i < strlen(copie_text); i++)
+    {
+        copie_text[i] = tolower(copie_text[i]);
+    }
+    char* p = strtok(copie_text, " ,.!");
+    while (p != NULL)
+    {
+        if (strstr(copie_sir, p) != NULL)
+            return 1;
+        p = strtok(NULL, " ,.!");
+
+    }
     return 0;
 }
 
