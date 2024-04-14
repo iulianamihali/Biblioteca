@@ -7,5 +7,4 @@
 1978,Calea,George Calinescu, Rolcris,4
 225,Calea,Zsdy,Arthur,69
 778,Calea,Ionik,Prestige,4
-998,Amintiri din copilarie,Ion Creanga,Delfin,1
 2048945469,Umbra noptii,Anda Crammer,Delfin,1

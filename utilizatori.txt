@@ -1,12 +1,10 @@
-111,iuliana,floare,admin
+111,iuliana,12345,admin
 222,andrei,parola,user
 333,maria,scoala,user
 444,cristina,123,user
-497908984,ovidiu,1010,user
 1963898228,anca,yellow,user
 995187025,bogdan,aand,user
 198062499,utilizator1,123,user
 1659869933,octavi,parola12,user
-929238746,iuloi,iuli,user
 1914752294,ana,ana,user
 1774126720,iarina,amdsa,user
