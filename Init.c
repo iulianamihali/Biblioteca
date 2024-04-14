@@ -9,8 +9,8 @@
 #include "Init.h"
 #include <stdio.h>
 
-
-void citire_carti(Carte carti[], int* n)   //preluam datele din fisierul Carti si le punem in vector
+// preluam datele din fisiere si le adaugam in vectori
+void citire_carti(Carte carti[], int* n)   
 {
 	FILE* fptr;
 	fptr = fopen("carti.txt", "r");

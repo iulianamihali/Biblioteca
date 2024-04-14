@@ -12,12 +12,11 @@ void meniu_vizualizare_cont(Context* context);
 void meniu_adaugare_carte_admin(Context* context);
 void meniu_stergere_carte_admin(Context* context);
 void meniu_exit();
-
 void stergere_imprumuturi(Context* context, char autor[], char carte_cautata[]);
 void adaugare_donatie(Context* context, char autor[], char carte[], char editura[]);
 void cautare_carte(Context* context, char text[]);
 int  fct_tolower(char sir[], char text[]);
-int fct_tolower_strtok(char sir[], char text[]);
+int  fct_tolower_strtok(char sir[], char text[]);
 int  verify_login_argv(Context *context, char nume[], char parola[]);
-int hashString(const char* str);
+int  hashString(const char* str);
 char* getCurrentDate();

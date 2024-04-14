@@ -1,11 +1,11 @@
 1438,Maitreyi,Mircea Eliade,Cartex,7
 9256,Acolo unde canta racii,Delia Owens,Pandora,2
 1109,Harry Potter,J.K.Rowling,Arthur,7
-21010,Trepte spre cer,Zecharia Sitchin,Prestige,6
+21010,Trepte spre cer,Zecharia Sitchin,Prestige,8
 7737,Enigma Otiliei,George Calinescu,Rolcris,5
 1223,Cartea Nuntii,George Calinescu,Rolcris,9
 1978,Calea,George Calinescu, Rolcris,4
 225,Calea,Zsdy,Arthur,69
-778,Calea,Ionik,Prestige,3
+778,Calea,Ionik,Prestige,4
 998,Amintiri din copilarie,Ion Creanga,Delfin,1
 2048945469,Umbra noptii,Anda Crammer,Delfin,1

@@ -69,5 +69,4 @@ typedef struct Context
 	Utilizator cont_logat;  
 
 
-
 }Context;

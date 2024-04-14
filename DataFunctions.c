@@ -13,7 +13,7 @@
 #include "Init.h"
 #include "DataFunctions.h"
 
-int hashString(const char* str) {
+int hashString(const char* str) { //pe baza stringului genereaza cod unic
     unsigned long hash = 5381;
     int c;
 
@@ -103,10 +103,11 @@ void login_cont(Context* context)
 
             for (int i = 0; i < context->nr_utilizatori; i++)
             {
-
-                if (strcmp(nume, context->utilizatori[i].nume) == 0 && strcmp(parola, context->utilizatori[i].parola) == 0)//verificare pt login daca datele introduse exista
+                //verificare pt login daca datele introduse sunt valide
+                if (strcmp(nume, context->utilizatori[i].nume) == 0 && strcmp(parola, context->utilizatori[i].parola) == 0)
                 {
                     cod_exista = 1;
+                    //retinem contul logat
                     context->cont_logat.cod = context->utilizatori[i].cod;
                     context->cont_logat.tip_utilizator = (char*)malloc(101);
                     strcpy(context->cont_logat.tip_utilizator,context->utilizatori[i].tip_utilizator);
@@ -121,7 +122,7 @@ void login_cont(Context* context)
                 strcpy(context->cont_logat.parola, parola);
                 printare_meniu(context);
                 meniu_principal(context);
-                stop_while = 1;
+                stop_while = 1; // while-ul se opreste cand datele introduse sunt valide
             }
             else
             {
@@ -148,6 +149,7 @@ void login_cont(Context* context)
         {
             for (int i = 0; i < context->nr_utilizatori; i++)
             {
+                //verificam sa nu existe alt nume in fisierul utilizatori
                 if (strcmp(nume, context->utilizatori[i].nume) == 0)
                 {
                     valid_nume = 0;
@@ -175,7 +177,7 @@ void login_cont(Context* context)
         char str[101];
         strcpy(str, nume);
         strcpy(str + strlen(str), parola);
-        int cod_random = hashString(str);
+        int cod_random = hashString(str); //sign up => cod random pt utilizator
         context->cont_logat.cod = cod_random;
         context->cont_logat.nume = (char*)malloc(101);
         strcpy(context->cont_logat.nume, nume);
@@ -193,8 +195,8 @@ void login_cont(Context* context)
         context->utilizatori[context->nr_utilizatori].tip_utilizator = (char*)malloc(101);
         strcpy(context->utilizatori[context->nr_utilizatori].tip_utilizator, "user");
 
-        context->nr_utilizatori++;
-        update_utilizatori(context->utilizatori, context->nr_utilizatori); //un nou utilizator s-a inregistrat deci facem update in fisierul de utilizatori
+        context->nr_utilizatori++; 
+        update_utilizatori(context->utilizatori, context->nr_utilizatori); //un nou utilizator s-a inregistrat, facem update in fisierul de utilizatori
 
         system("cls");
         printare_meniu(context);
@@ -203,6 +205,7 @@ void login_cont(Context* context)
     }
     else
     {
+        // daca utilizatorul nu introduce optiunile valide 1 sau 2, se apeleaza din nou functia login( LOGIN OR SIGNUP)
         system("cls");
         login_cont(context);
     }
@@ -243,18 +246,19 @@ void meniu_imprumutare(Context* context)
             {
                 if (strcmp(carte, context->carti[i].nume) == 0 && strcmp(autor, context->carti[i].autor) == 0)
                 {
-                    if (context->carti[i].nr_exemplare > 0)
+                    if (context->carti[i].nr_exemplare > 0) // verificam daca cartea e pe stoc
                     {
                         stop_while = 0;
                         //updatam vectorul de imprumuturi
                         context->imprumuturi[context->nr_imprumuturi].cod_utilizator = context->cont_logat.cod;
                         context->imprumuturi[context->nr_imprumuturi].cod_carte = context->carti[i].cod;
                         context->imprumuturi[context->nr_imprumuturi].data_imprumut = (char*)malloc(20);
-                        char* currentDate = getCurrentDate();
+
+                        char* currentDate = getCurrentDate(); //data la care s-a efectuat imprumutul
                         strcpy(context->imprumuturi[context->nr_imprumuturi].data_imprumut, currentDate);
                         context->nr_imprumuturi++;
                         context->carti[i].nr_exemplare--;
-                        update_carti(context->carti, context->nr_carti);
+                        update_carti(context->carti, context->nr_carti); //update in fisierul carti, nr. exemplare a scazut
                         update_imprumuturi(context->imprumuturi, context->nr_imprumuturi); //facem update in fisierul de imprumuturi
                         char* data_imprumut = getCurrentDate();
                         system("cls");
